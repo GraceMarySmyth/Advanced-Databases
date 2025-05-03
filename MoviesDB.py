@@ -2,7 +2,11 @@ def main():
     while True:
         display_menu()
         choice = input("Choice:")
-    
+
+        if (choice == 'x'):
+            break
+
+
 def display_menu():
     print("MoviesDB")
     print("---------")
