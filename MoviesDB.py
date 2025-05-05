@@ -1,3 +1,6 @@
+import pymysql
+
+
 def main():
     while True:
         display_menu()
@@ -27,6 +30,14 @@ def display_menu():
 def View_Directors_and_Films():
     print("Directors and Films")
 
+    try:
+        conn = pymysql.connect(
+            host="localhost",
+            user="your_username",
+            password="your_password",
+            database="moviesdb",
+            cursorclass=pymysql.cursors.DictCursor
+        )
 
 
 
