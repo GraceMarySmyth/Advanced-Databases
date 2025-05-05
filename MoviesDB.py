@@ -41,14 +41,27 @@ def View_Directors_and_Films():
             return    
 
 def View_Actors_by_Month_of_Birth():
-    month = input("Enter month: ")
+    month_input = input("Enter month (first 3 letters, e.g., Jan, Feb, or month number, e.g., 1, 2): ").strip()
+    
+    # Normalize input to month abbreviation
+    if month_input.isdigit():
+        month_number = int(month_input)
+        if 1 <= month_number <= 12:
+            month = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", 
+                     "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"][month_number - 1]
+        else:
+            print("Invalid month number. Please try again.")
+            return
+    else:
+        month = month_input.capitalize()
+    
     actors_by_month = f2actor.view_actor(month)
     if actors_by_month:
         print("\nActor | DOB | Gender")
         print("------------------------")
-    for actor in actors_by_month:
-        print (f"{actor['ActorName']}, |, {actor['ActorDOB']}, |, {actor['ActorGender']}")
-    if not actors_by_month:
+        for actor in actors_by_month:
+            print(f"{actor['ActorName']}, |, {actor['ActorDOB']}, |, {actor['ActorGender']}")
+    else:
         print("-------------------")
         print("No actors born in that month.")
         return
