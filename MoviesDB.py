@@ -28,19 +28,12 @@ def display_menu():
     print("x - Exit application")
 
 def View_Directors_and_Films():
-    print("Directors and Films")
-
-    try:
-        conn = pymysql.connect(
-            host="localhost",
-            user="your_username",
-            password="your_password",
-            database="moviesdb",
-            cursorclass=pymysql.cursors.DictCursor
-        )
-
-
-
+    name = input("Enter name or part of name to search: ")
+    directors_and_films = f1director.view_director(name)
+    print("\nDirector | Film | Studio")
+    print("---------------------------")
+    for director in directors_and_films:
+        print(f"{director['directorName']}, |, {film['FilmName']}, |, {studio['StudioName']}")
 
 
 if __name__ == "__main__":
