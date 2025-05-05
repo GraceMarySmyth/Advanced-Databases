@@ -47,8 +47,8 @@ def View_Actors_by_Month_of_Birth():
         print("\nActor | DOB | Gender")
         print("------------------------")
     for actor in actors_by_month:
-        print (f"{actor['ActorName']}, |, {actor['ActorDOB']}, |, {actor['ActorGender']"}
-    if not actors_by-month:
+        print (f"{actor['ActorName']}, |, {actor['ActorDOB']}, |, {actor['ActorGender']}")
+    if not actors_by_month:
         print("-------------------")
         print("No actors born in that month.")
         return
