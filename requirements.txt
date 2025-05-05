@@ -1,1 +1,3 @@
-conda install pymysql
+conda install pymysql  # in Anaconda prompt
+
+pip install pymysql  # in terminal or command prompt
