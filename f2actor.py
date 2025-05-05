@@ -12,17 +12,27 @@ def connect():
         cursorclass=pymysql.cursors.DictCursor
         )
 
-def view_director(name):
+def view_actor_by_month(name):
     global conn
     if not conn:
         connect()
 
-query = "select ActorName, ActorDOB, ActorGender FROM actor; WHERE MONTH(actorDOB) = 2"
+query = "SELECT ActorName, ActorDOB, ActorGender FROM actor WHERE MONTH(ActorDOB) = %s"
 
-    with conn.cursor() as cursor:
-        cursor.execute(query, (1<= month >=12,))
-        x = cursor.fetchall()
-        if not x:
-            print("No actors born that month.")
-            return None
-        return x 
+while True:
+    try:
+        month = int(input("Enter a month (1-12): "))
+        if 1 <= month <= 12:
+            break
+        else:
+            print("Please enter a valid month between 1 and 12.")
+    except ValueError:
+        print("Invalid input. Please enter a number between 1 and 12.")
+
+with conn.cursor() as cursor:
+    cursor.execute(query, (month,))
+    x = cursor.fetchall()
+    if not x:
+        print("No actors born that month.")
+        return None
+    return x
