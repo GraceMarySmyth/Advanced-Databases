@@ -9,7 +9,7 @@ def main():
         if (choice == 'x'):
             break
         elif (choice =="1"):
-            View Directors_and_Films()
+            View_Directors_and_Films()
         else:
             print("Invalid choice, please try again.")
 
