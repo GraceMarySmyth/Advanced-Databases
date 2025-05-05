@@ -40,5 +40,18 @@ def View_Directors_and_Films():
             print("No directors found of that name.")
             return    
 
+def View_Actors_by_Month_of_Birth():
+    month = input("Enter month: ")
+    actors_by_month = f2actor.view_actor(month)
+    if actors_by_month:
+        print("\nActor | DOB | Gender")
+        print("------------------------")
+    for actor in actors_by_month:
+        print (f"{actor['ActorName']}, |, {actor['ActorDOB']}, |, {actor['ActorGender']"}
+    if not actors_by-month:
+        print("-------------------")
+        print("No actors born in that month.")
+        return
+
 if __name__ == "__main__":
     main()
