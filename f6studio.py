@@ -1,5 +1,7 @@
 import pymysql
 
+conn = None
+
 def connect():
     global conn
     conn = pymysql.connect(
@@ -10,17 +12,17 @@ def connect():
         cursorclass=pymysql.cursors.DictCursor
         )
 
-def add_Actor(ActorID, ActorName, ActorDOB, ActorGender, ActorCountryID)
+def view_studio(name):
     global conn
     if not conn:
         connect()
         
-    query = "INSERT INTO actor(ActorID, ActorName, ActorDOB, ActorGender, CountryID)
-    
+query = "SELECT StudioID, StudioName FROM studio ORDER BY StudioID"
+
     with conn.cursor() as cursor:
-        cursor.execute(query, ('%' + name + '%',))
+        cursor.execute(query)
         x = cursor.fetchall()
         if not x:
-            print("No directors found of that name")
+            print("No studios found")
             return None
         return x 
