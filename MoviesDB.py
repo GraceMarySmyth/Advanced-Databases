@@ -30,11 +30,15 @@ def display_menu():
 def View_Directors_and_Films():
     name = input("Enter name or part of name to search: ")
     directors_and_films = f1director.view_director(name)
-    print("\nDirector | Film | Studio")
-    print("---------------------------")
+    if directors_and_films:
+        print("\nDirector | Film | Studio")
+        print("---------------------------")
     for director in directors_and_films:
         print(f"{director['directorName']}, |, {film['FilmName']}, |, {studio['StudioName']}")
-
+    if not directors_and_films:
+            print("-----------------------------")  
+            print("No directors found of that name.")
+            return    
 
 if __name__ == "__main__":
     main()

@@ -22,5 +22,8 @@ def view_director(name):
     with conn.cursor() as cursor:
         cursor.execute(query, ('%' + name + '%',))
         x = cursor.fetchall()
-        return x 
+        if not x:
+            print("No directors found of that name")
+            return None
+        return x
        
