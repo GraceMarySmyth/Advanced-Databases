@@ -12,37 +12,31 @@ def connect():
         cursorclass=pymysql.cursors.DictCursor
     )
 
-def view_actor_by_month(name):
+def view_actor(month_input):
     global conn
     if not conn:
         connect()
-
-    query = "SELECT ActorName, ActorDOB, ActorGender FROM actor WHERE MONTH(ActorDOB) = %s"
 
     month_map = {
         "jan": 1, "feb": 2, "mar": 3, "apr": 4, "may": 5, "jun": 6,
         "jul": 7, "aug": 8, "sep": 9, "oct": 10, "nov": 11, "dec": 12
     }
 
-    while True:
-        try:
-            month = input("Enter a month (1-12 or first three letters): ").strip().lower()
-            if user_input.isdigit():
-                month = int(user_input)
-            if 1 <= month <= 12:
-                break
-            else:
-                print("Please enter a valid month between 1 and 12.")
-        elif user_input in month_map:
-            month = month_map[user_input]
-            break
-        else:
-            print("Invalid input. Please enter a number between 1 and 12 or the first three letters of a month.")
+    if month_input.isdigit():
+        month = int(month_input)
+    else:
+        month = month_input.lower()
+        month = month_map.get(month_input.lower()[:3], 0)
 
-    with conn.cursor() as cursor:
-        cursor.execute(query, (month,))
-        x = cursor.fetchall()
-        if not x:
-            print("No actors born that month.")
-            return None
-        return x
+    if not (1 <= month <= 12):
+        print("Invalid month.")
+        return None
+
+    query = "SELECT ActorName, ActorDOB, ActorGender FROM actor WHERE MONTH(ActorDOB) = %s"
+    try:
+        with conn.cursor() as cursor:
+            cursor.execute(query, (month,))
+            return cursor.fetchall()
+    except Exception as e:
+        print("Database error:", e)
+        return None
