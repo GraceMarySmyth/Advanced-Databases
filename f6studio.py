@@ -10,19 +10,23 @@ def connect():
         password="root", 
         db="appdbproj", 
         cursorclass=pymysql.cursors.DictCursor
-        )
+    )
 
-def view_studio(name):
+def view_studio():
     global conn
     if not conn:
         connect()
         
-query = "SELECT StudioID, StudioName FROM studio ORDER BY StudioID"
+    query = "SELECT StudioID, StudioName FROM studio ORDER BY StudioID"
 
-    with conn.cursor() as cursor:
-        cursor.execute(query)
-        x = cursor.fetchall()
-        if not x:
-            print("No studios found")
-            return None
-        return x 
+    try:
+        with conn.cursor() as cursor:
+            cursor.execute(query)
+            x = cursor.fetchall()
+            if not x:
+                print("No studios found")
+                return None
+            return x
+    except Exception as e:
+        print("Error fetching studios:", e)
+        return None
