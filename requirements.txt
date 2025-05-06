@@ -1,3 +1,7 @@
 conda install pymysql  # in Anaconda prompt
 
 pip install pymysql  # in terminal or command prompt
+
+conda install neo4j-python-driver  # in Anaconda prompt
+
+pip install neo4j-python-driver # in terminal or command prompt
