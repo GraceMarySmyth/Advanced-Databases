@@ -80,7 +80,7 @@ def add_Actor():
     return
 
 def studio():
-    studios = f6studio.view_studios()
+    studios = f6studio.view_studio()
     if studios:
         print("\nStudio ID | Studio Name")
         print("------------------------")
