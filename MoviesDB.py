@@ -21,7 +21,7 @@ def main():
         elif choice == "4":
             Married_Actor()
         elif choice == "5":
-            Add_Actor_Marriage
+            Add_Actor_Marriage()
         elif choice == "6":
             studio()
         else:
@@ -111,6 +111,29 @@ def Married_Actor():
         married_service.connect(all_ids)
     else:
         print("This actor is not married.")
+        
+        
+def Add_Actor_Marriage():
+    import f5AddActorMarriage as marriage_service
+
+    actor1_id = input("Enter Actor 1 ID: ").strip()
+    actor2_id = input("Enter Actor 2 ID: ").strip()
+
+    if actor1_id == actor2_id:
+        print("An actor cannot marry themselves.")
+        return
+
+    if not marriage_service.actors_exist_mysql(actor1_id, actor2_id):
+        print("One or both actor IDs do not exist.")
+        return
+
+    if marriage_service.is_actor_married(actor1_id) or marriage_service.is_actor_married(actor2_id):
+        print("One or both actors are already married.")
+        return
+
+    marriage_service.create_marriage_relationship(actor1_id, actor2_id)
+    print(f"Actor {actor1_id} is now married to Actor {actor2_id}")
+
 
 def studio():
     studios = f6Studio.view_studio()
