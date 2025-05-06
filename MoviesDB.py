@@ -1,5 +1,7 @@
 import f1director
 import f2actor
+import f3addActor
+import f6studio
 
 def main():
     while True:
@@ -65,6 +67,29 @@ def View_Actors_by_Month_of_Birth():
         print("-------------------")
         print("No actors born in that month.")
         return
+    
+
+def add_Actor():
+    ActorID = input("Enter Actor ID: ")
+    ActorName = input("Enter Actor Name: ")
+    ActorDOB = input("Enter Actors DOB: ")
+    ActorCountryID = input("Enter country that actor is from: ")
+    
+    f3addActor.add_Actor(ActorID, ActorName, ActorDOB, ActorCountryID)
+    print("Actor successfully added. Returning to the main menu.")
+    return
+
+def studio():
+    studios = f6studio.view_studios()
+    if studios:
+        print("\nStudio ID | Studio Name")
+        print("------------------------")
+        for studio in sorted(studios, key=lambda x: x['StudioID']):
+            print(f"{studio['StudioID']} | {studio['StudioName']}")
+    else:
+        print("-------------------")
+        print("No studios found.")
+  
 
 if __name__ == "__main__":
     main()
