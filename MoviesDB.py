@@ -2,7 +2,8 @@ import f1director
 import f2actor
 import f3addActor
 import f4MarriedActors
-import f6studio
+import f5AddActorMarriage
+import f6Studio
 
 def main():
     while True:
@@ -19,6 +20,8 @@ def main():
             add_Actor()
         elif choice == "4":
             Married_Actor()
+        elif choice == "5":
+            Add_Actor_Marriage
         elif choice == "6":
             studio()
         else:
@@ -91,12 +94,23 @@ def add_Actor():
     f3addActor.add_Actor(ActorID, ActorName, ActorDOB, ActorGender, ActorCountryID)
 
 def Married_Actor():
-    user_actor_id = input("Enter Actor ID: ")
-    married_actors = f4MarriedActors.check_actor_relationship(user_actor_id)
+    actor_id = input("Enter Actor ID: ").strip()
+    
+    try:
+    # Convert the input to an integer
+        actor_id = int(actor_id)
+    except ValueError:
+        print("Invalid Actor ID format. Please enter a valid integer ID.")
+        return
+    
+    married_service = f4MarriedActors.F4MarriedActors()
+    married_actors = married_service.check_actor_relationship(actor_id)
+    
     if married_actors:
-        connect(married_actors)
+        all_ids = [actor_id] + married_actors
+        married_service.connect(all_ids)
     else:
-        print("No married actors found.")
+        print("This actor is not married.")
 
 def studio():
     studios = f6Studio.view_studio()
@@ -108,6 +122,7 @@ def studio():
     else:
         print("-------------------")
         print("No studios found.")
+
 
 if __name__ == "__main__":
     main()
