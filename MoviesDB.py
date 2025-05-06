@@ -1,20 +1,27 @@
 import f1director
 import f2actor
 import f3addActor
-import f6studio
+import f6Studio
 
 def main():
     while True:
         display_menu()
-        choice = input("Choice:")
+        choice = input("Choice: ")
 
-        if (choice == 'x'):
+        if choice == 'x':
             break
-        elif (choice =="1"):
+        elif choice =="1":
             View_Directors_and_Films()
+        elif choice =="2":
+            View_Actors_by_Month_of_Birth()
+        elif choice == "3":
+            add_Actor()
+        elif choice == "6":
+            studio()
         else:
-            print("Invalid choice, please try again.")
+            print("Invalid choice. Please try again.") 
 
+            
 def display_menu():
     print("MoviesDB")
     print("---------")
@@ -32,20 +39,22 @@ def display_menu():
 def View_Directors_and_Films():
     name = input("Enter name or part of name to search: ")
     directors_and_films = f1director.view_director(name)
+
+    if not directors_and_films:
+        print("--------------------------------")
+        print("No directors found of that name.")    
+    
     if directors_and_films:
         print("\nDirector | Film | Studio")
         print("---------------------------")
     for director in directors_and_films:
-        print(f"{director['directorName']}, |, {film['FilmName']}, |, {studio['StudioName']}")
-    if not directors_and_films:
-            print("-----------------------------")  
-            print("No directors found of that name.")
-            return    
-
+        print(f"{director['DirectorName']}, |, {director['FilmName']}, |, {director['StudioName']}")
+    
+   
+            
 def View_Actors_by_Month_of_Birth():
     month_input = input("Enter month (first 3 letters, e.g., Jan, Feb, or month number, e.g., 1, 2): ").strip()
     
-    # Normalize input to month abbreviation
     if month_input.isdigit():
         month_number = int(month_input)
         if 1 <= month_number <= 12:
@@ -62,25 +71,25 @@ def View_Actors_by_Month_of_Birth():
         print("\nActor | DOB | Gender")
         print("------------------------")
         for actor in actors_by_month:
-            print(f"{actor['ActorName']}, |, {actor['ActorDOB']}, |, {actor['ActorGender']}")
+            print(f"{actor['ActorName']} | {actor['ActorDOB']} | {actor['ActorGender']}")
     else:
         print("-------------------")
         print("No actors born in that month.")
-        return
-    
 
+            
+            
 def add_Actor():
     ActorID = input("Enter Actor ID: ")
     ActorName = input("Enter Actor Name: ")
     ActorDOB = input("Enter Actors DOB: ")
+    ActorGender = input("Enter Actors Gender: ")
     ActorCountryID = input("Enter country that actor is from: ")
     
-    f3addActor.add_Actor(ActorID, ActorName, ActorDOB, ActorCountryID)
-    print("Actor successfully added. Returning to the main menu.")
-    return
+    f3addActor.add_Actor(ActorID, ActorName, ActorDOB, ActorGender, ActorCountryID)
+
 
 def studio():
-    studios = f6studio.view_studio()
+    studios = f6Studio.view_studio()
     if studios:
         print("\nStudio ID | Studio Name")
         print("------------------------")
@@ -89,7 +98,7 @@ def studio():
     else:
         print("-------------------")
         print("No studios found.")
-  
 
 if __name__ == "__main__":
     main()
+    
