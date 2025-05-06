@@ -1,7 +1,8 @@
 import f1director
 import f2actor
 import f3addActor
-import f6Studio
+import f4MarriedActors
+import f6studio
 
 def main():
     while True:
@@ -16,6 +17,8 @@ def main():
             View_Actors_by_Month_of_Birth()
         elif choice == "3":
             add_Actor()
+        elif choice == "4":
+            Married_Actor()
         elif choice == "6":
             studio()
         else:
@@ -87,6 +90,13 @@ def add_Actor():
     
     f3addActor.add_Actor(ActorID, ActorName, ActorDOB, ActorGender, ActorCountryID)
 
+def Married_Actor():
+    user_actor_id = input("Enter Actor ID: ")
+    married_actors = check_actor_relationship(user_actor_id)
+    if married_actors:
+        connect(married_actors)
+    else:
+        print("No married actors found.")
 
 def studio():
     studios = f6Studio.view_studio()
