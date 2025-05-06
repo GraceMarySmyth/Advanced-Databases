@@ -92,7 +92,7 @@ def add_Actor():
 
 def Married_Actor():
     user_actor_id = input("Enter Actor ID: ")
-    married_actors = check_actor_relationship(user_actor_id)
+    married_actors = f4MarriedActors.check_actor_relationship(user_actor_id)
     if married_actors:
         connect(married_actors)
     else:

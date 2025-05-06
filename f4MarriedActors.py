@@ -1,36 +1,43 @@
 from neo4j import GraphDatabase
 import pymysql
 
-def check_actor_relationship(actor_id):
-    neo4j_driver = GraphDatabase.driver("bolt://localhost:7687", auth=("neo4j", "neo4jneo4j"), max_connectionLifetime=1000)
-    
-    with neo4j_driver.session() as session:
-        result = session.run("MATCH (a:Actor)-[:married_to]-(b:Actor) WHERE a.id = $actor_id RETURN b.id, b.name", actor_id=actor_id)
-        married_actors = result.data()
+class F4MarriedActors:
+    def __init__(self):
+        self.neo4j_driver = GraphDatabase.driver("bolt://localhost:7687", auth=("neo4j", "neo4jneo4j"))
 
-    return married_actors
-    
+    def check_actor_relationship(self, actor_id):
+        with self.neo4j_driver.session() as session:
+            result = session.run("""
+                MATCH (a:Actor {ActorID: $actor_id})-[:MARRIED_TO]-(b:Actor)
+                RETURN b.ActorID AS partner_id
+            """, actor_id=actor_id)
+            data = [record["partner_id"] for record in result]
+            return data
 
-conn = None
+    def connect(self, actor_ids):
+        try:
+            mysql_conn = pymysql.connect(
+                host="localhost",
+                user="root",
+                password="root",
+                database="appdbproj",
+                cursorclass=pymysql.cursors.DictCursor
+            )
+            with mysql_conn.cursor() as cursor:
+                placeholders = ','.join(['%s'] * len(actor_ids))
+                query = f"SELECT ActorID, ActorName FROM actor WHERE ActorID IN ({placeholders})"
+                cursor.execute(query, tuple(actor_ids))
+                results = cursor.fetchall()
 
-def connect():
-    global conn
-    try:
-        mysql_conn = mysql.connector.connect(
-            host="localhost",
-            user="root",
-            password="root",
-            database="appdbproj",
-            cursorclass=pymysql.cursors.DictCursor
-        )
-        cursor = mysql_conn.cursor()
-
-        for actor in married_actors:
-            cursor.execute("SELECT name FROM actors WHERE id = %s", (actor['b.id'],))
-            actor_name = cursor.fetchone()
-            if actor_name:
-                print(f"Actor ID: {actor['b.id']}, Actor Name: {actor_name[0]}")
-    finally:
-        cursor.close()
-        mysql_conn.close()
-
+            if results:
+                for actor in results:
+                    print("---------------------------")
+                    print("These actors are Married:")
+                    print(f"Actor ID: {actor['ActorID']}, Actor Name: {actor['ActorName']}")
+            else:
+                print("This actor is not married.")
+        
+        except Exception as e:
+            print("Database error:", e)
+        finally:
+            mysql_conn.close()
