@@ -1,0 +1,24 @@
+REFERENCES
+-------------------
+
+Lecture notes from week 8, 9 and 10. 
+
+https://www.geeksforgeeks.org/connect-to-mysql-using-pymysql-in-python/
+
+https://pymysql.readthedocs.io/en/latest/
+
+https://medium.com/swlh/python-mysql-baby-steps-with-pymysql-89d62191f312
+
+https://www.w3schools.com/sql/sql_insert.asp
+
+https://www.dataquest.io/blog/sql-insert/
+
+https://neo4j.com/blog/developer/data-migration-between-mysql-and-neo4j/
+
+https://www.logicgate.com/developer/spring-boot-with-neo4j-mysql/
+
+https://www.youtube.com/watch?v=fjZoyDc218o
+
+https://neo4j.com/blog/developer/neo4j-driver-best-practices/
+
+chat GPT for f4 and f5. 
